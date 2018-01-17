@@ -1,0 +1,30 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
+  },
+  "extends": "standard",
+  "globals": {
+    "Papa": false,
+    "Moon": false,
+    "lunr": false,
+    "Vue": false
+  },
+  "rules": {
+    "no-new": 0,
+    "semi": 0,
+    "no-spaced-func": 1,
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ],
+    "new-cap": [
+      "warn",
+      {
+        "properties": true
+      }
+    ]
+  }
+}
