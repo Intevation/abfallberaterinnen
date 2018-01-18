@@ -32,8 +32,9 @@
 
     <div class="search wrapper">
       <form class="form-search form-inline">
+        <!--@keydown.enter.prevent  prevents deleting the input field if ENTER is pressed-->
         <input type="search" class="form-control search-query" placeholder="Postleitzahl oder Ort eingeben ..." v-model="query" v-on:input="search"
-          id="search" />
+          @keydown.enter.prevent="" id="search" />
       </form>
     </div>
 
