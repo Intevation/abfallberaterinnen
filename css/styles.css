@@ -2,9 +2,14 @@
     margin: 10px;
 }
 
-#result {
+#item{
     background-color: gainsboro;
     padding: 10px;
+    margin: 10px;
+}
+
+h3 {
+    margin-bottom: 20px !important;
 }
 
 input.search-query {

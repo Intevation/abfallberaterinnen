@@ -42,9 +42,7 @@
       <span class="label label-default">{{count}}</span>
     </h3>
 
-    <div v-if="results" v-for="item in results" v-bind:item="item">
-      <br>
-      <div id="result">
+    <div id="item" v-if="results" v-for="item in results" v-bind:item="item">
         <div class="input-group" v-if="item['Unternehmen 1'] || item['Unternehmen 2']">
           <span class="input-group-addon" title="Unternehmen" style="vertical-align: top;">
             <span class="glyphicon glyphicon-home"></span>
@@ -133,7 +131,6 @@
             </div>
         </div>
 
-      </div>
     </div>
   </div>
 
