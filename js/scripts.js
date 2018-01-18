@@ -24,7 +24,7 @@ Papa.parse('data/file.csv', {
       methods: {
         search: function() {
           var results = [];
-          var query = this.query;
+          var query = this.query.toLowerCase();
           var searchResults = [];
           if (query) {
             searchResults = idx.query(function(q) {
