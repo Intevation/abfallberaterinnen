@@ -1,3 +1,8 @@
+/* v-cloak directive, will hide the vue instance until the compilation finishes */
+[v-cloak] {
+    display: none;
+}
+
 .input-group {
     margin: 10px;
 }
