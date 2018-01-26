@@ -10,7 +10,8 @@
     "Papa": false,
     "Moon": false,
     "lunr": false,
-    "Vue": false
+    "Vue": false,
+    "XLSX": false
   },
   "rules": {
     "no-new": 0,
