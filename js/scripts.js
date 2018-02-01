@@ -1,6 +1,10 @@
 /* set up an async GET request */
 var req = new XMLHttpRequest();
-req.open('GET', 'data/Abfallberatungen_Dropbox.xlsx', true);
+// https://www.dropbox.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?dl=0
+// www.dropbox.com doesn't support cors use dl.dropboxusercontent.com instead.
+// https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1
+// req.open('GET', 'data/Abfallberatungen_Dropbox.xlsx', true);
+req.open('GET', 'https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1', true);
 req.responseType = 'arraybuffer';
 
 req.onload = function(e) {
