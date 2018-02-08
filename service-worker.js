@@ -3,22 +3,22 @@
 var CACHE = 'pwabuilder-precache';
 var precacheFiles = [
       /* Add an array of files to precache for your app */
-    '/',
-    '/index.html',
-    '/js/scripts.js',
-    '/js/vue.js',
-    '/js/lunr.js',
-    '/js/xlsx.full.min.js',
-    '/js/papaparse.min.js',
-    '/js/manup.min.js',
-    '/css/search-glass.svg',
-    '/css/styles.css',
-    '/css/img/phone-white.png',
-    '/css/img/info-sign-white.png',
-    '/css/img/user-white.png',
-    '/css/img/envelope-white.png',
-    '/css/img/external-link-white.png',
-    '/css/img/home-white.png'
+    '.',
+    'index.html',
+    'js/scripts.js',
+    'js/vue.js',
+    'js/lunr.js',
+    'js/xlsx.full.min.js',
+    'js/papaparse.min.js',
+    'js/manup.min.js',
+    'css/search-glass.svg',
+    'css/styles.css',
+    'css/img/phone-white.png',
+    'css/img/info-sign-white.png',
+    'css/img/user-white.png',
+    'css/img/envelope-white.png',
+    'css/img/external-link-white.png',
+    'css/img/home-white.png'
     ];
 
 //Install stage sets up the cache-array to configure pre-cache content
