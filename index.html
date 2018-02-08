@@ -46,7 +46,7 @@
     <div id="item" v-if="results" v-for="item in results" v-bind:item="item">
       <div class="input-group" v-if="item['Unternehmen 1'] || item['Unternehmen 2']">
         <span class="input-group-addon" title="Unternehmen" style="vertical-align: top;">
-          <span class="glyphicon glyphicon-home"></span>
+          <img src="css/img/home-white.png" width="14" />
         </span>
         <div class="form-control" style="height: auto;">
           <div v-if="item['Unternehmen 1']">{{item['Unternehmen 1']}}</div>
@@ -57,7 +57,7 @@
 
       <div class="input-group">
         <span class="input-group-addon" style="vertical-align: top;" title="AbfallberaterIn">
-          <span class="glyphicon glyphicon-user"></span>
+          <img src="css/img/user-white.png" width="14" />
         </span>
         <div class="form-control" style="height: auto;">
           <div v-if="item.Abfallberater">{{item.Abfallberater}}</div>
@@ -67,8 +67,8 @@
 
       <div class="input-group" v-if="item['E-Mail']">
         <span class="input-group-btn" title="E-Mail">
-          <a class="btn btn-default" type="button" v-bind:href="`mailto:${item['E-Mail']}`">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
+          <a class="btn btn-custom" type="button" v-bind:href="`mailto:${item['E-Mail']}`">
+          <img src="css/img/envelope-white.png" width="14" />
           </a>
         </span>
         <input class="form-control" v-model="item['E-Mail']" readonly="readonly" type="text">
@@ -76,8 +76,8 @@
 
       <div class="input-group" v-if="item.Telefon">
         <span class="input-group-btn" title="Telefon">
-          <a class="btn btn-default" type="button" v-bind:href="`tel:${item.Telefon}`">
-            <span class="glyphicon glyphicon-earphone"></span>
+          <a class="btn btn-custom" type="button" v-bind:href="`tel:${item.Telefon}`">
+          <img src="css/img/phone-white.png" width="14" />
           </a>
         </span>
         <input class="form-control" v-model="item.Telefon" readonly="readonly" type="text">
@@ -85,7 +85,7 @@
 
       <div class="input-group" v-if="item['Angebote']">
         <span class="input-group-addon" title="Angebote" style="vertical-align: top;">
-          <span class="glyphicon glyphicon-tags"></span>
+          <img src="css/img/info-sign-white.png" width="14" />
         </span>
         <div class="form-control" style="height: auto;">
           Angebote zu Abfallvermeidung und Abfalltrennung (Auswahl):
@@ -95,8 +95,8 @@
 
       <div class="input-group" v-if="item['Link 1']">
         <span class="input-group-btn" title="Link 1">
-          <a class="btn btn-default" type="button" v-bind:href="item['Link 1']" target="_blank">
-            <span class="glyphicon glyphicon-link"></span>
+          <a class="btn btn-custom" type="button" v-bind:href="item['Link 1']" target="_blank">
+          <img src="css/img/external-link-white.png" width="14" />
           </a>
         </span>
         <div class="form-control" style="height: auto;">
@@ -108,8 +108,8 @@
 
       <div class="input-group" v-if="item['Link 2']">
         <span class="input-group-btn" title="Link 2">
-          <a class="btn btn-default" type="button" v-bind:href="item['Link 2']" target="_blank">
-            <span class="glyphicon glyphicon-link"></span>
+          <a class="btn btn-custom" type="button" v-bind:href="item['Link 2']" target="_blank">
+          <img src="css/img/external-link-white.png" width="14" />
           </a>
         </span>
         <div class="form-control" style="height: auto;">
@@ -121,8 +121,8 @@
 
       <div class="input-group" v-if="item['Link 3']">
         <span class="input-group-btn" title="Link 3">
-          <a class="btn btn-default" type="button" v-bind:href="item['Link 3']" target="_blank">
-            <span class="glyphicon glyphicon-link"></span>
+          <a class="btn btn-custom" type="button" v-bind:href="item['Link 3']" target="_blank">
+          <img src="css/img/external-link-white.png" width="14" />
           </a>
         </span>
         <div class="form-control" style="height: auto;">

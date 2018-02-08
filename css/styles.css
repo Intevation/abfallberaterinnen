@@ -1,4 +1,5 @@
 /* v-cloak directive, will hide the vue instance until the compilation finishes */
+
 [v-cloak] {
     display: none;
 }
@@ -7,10 +8,24 @@
     margin: 10px;
 }
 
+input.form-control {
+    background-color: white !important;
+}
+
+#form-control a {
+    color: #428bca !important;
+}
+
+#form-control a:hover {
+    color: #003560 !important;
+}
+
 #item {
-    background-color: gainsboro;
     padding: 10px;
     margin: 10px;
+    border-radius: 4px;
+    background-color: #F8F8F8;
+    border-left: 4px solid #0069b4;
 }
 
 h3 {
@@ -41,4 +56,51 @@ form.form-search:before {
 
 #search {
     width: 100%;
+}
+
+.label-default {
+    background-color: #0069b4 !important;
+}
+
+.input-group-addon {
+    background-color: #6f9ed4 !important;
+    border: 1px solid #6f9ed4 !important;
+}
+
+.form-control {
+    border: 1px solid #6f9ed4 !important;
+}
+
+.input-group-addon {
+    color: white !important;
+}
+
+.btn-custom {
+    background-color: #6f9ed4;
+    border-color: #6f9ed4;
+    color: white;
+}
+
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active {
+    background-color: #5b91ce;
+    border-color: #4884c8;
+}
+
+.btn-custom.disabled:hover,
+.btn-custom.disabled:focus,
+.btn-custom.disabled:active,
+.btn-custom.disabled.active,
+.btn-custom[disabled]:hover,
+.btn-custom[disabled]:focus,
+.btn-custom[disabled]:active,
+.btn-custom[disabled].active,
+fieldset[disabled] .btn-custom:hover,
+fieldset[disabled] .btn-custom:focus,
+fieldset[disabled] .btn-custom:active,
+fieldset[disabled] .btn-custom.active {
+    background-color: #6f9ed4;
+    border-color: #6f9ed4;
 }
