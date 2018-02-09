@@ -17,6 +17,7 @@ var precacheFiles = [
   'css/bootstrap-theme.min.css',
   'css/bootstrap.min.css',
   'css/font-awesome.min.css',
+  'css/img/search.png',
   'css/img/phone-white.png',
   'css/img/info-sign-white.png',
   'css/img/user-white.png',
