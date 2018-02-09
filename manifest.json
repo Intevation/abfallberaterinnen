@@ -5,7 +5,7 @@
     "scope": "/AbfallberaterInnen/",
     "display": "standalone",
     "start_url": "https://karten.nabu.de/AbfallberaterInnen/",
-    "short_name": "AbfallberaterIn",
+    "short_name": "Abfallberater",
     "theme_color": "transparent",
     "description": "AbfallberaterInnen suchen",
     "orientation": "any",
