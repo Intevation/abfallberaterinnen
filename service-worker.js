@@ -1,18 +1,22 @@
 //  This is the service worker with the Cache-first network
 
-var CACHE = 'pwabuilder-precache';
+var CACHE = 'abfallberater-precache';
 var precacheFiles = [
   /* Add an array of files to precache for your app */
   '.',
   'index.html',
-  'js/scripts.js',
+  'service-worker.js',
+  'js/manup.min.js',
   'js/vue.js',
   'js/lunr.js',
-  'js/xlsx.full.min.js',
   'js/papaparse.min.js',
-  'js/manup.min.js',
+  'js/xlsx.full.min.js',
+  'js/scripts.js',
   'css/search-glass.svg',
   'css/styles.css',
+  'css/bootstrap-theme.min.css',
+  'css/bootstrap.min.css',
+  'css/font-awesome.min.css',
   'css/img/phone-white.png',
   'css/img/info-sign-white.png',
   'css/img/user-white.png',
