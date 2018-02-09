@@ -63,18 +63,16 @@ req.onload = function(e) {
 };
 req.send();
 
+// This is the service worker with the Cache-first network
 
-//This is the service worker with the Cache-first network
-
-//Add this below content to your HTML page, or add the js file to your page at the very top to register sercie worker
+// Add this below content to your HTML page, or add the js file to your page at the very top to register sercie worker
 if (navigator.serviceWorker.controller) {
   console.log('[PWA Builder] active service worker found, no need to register')
 } else {
-
-//Register the ServiceWorker
+// Register the ServiceWorker
   navigator.serviceWorker.register('service-worker.js', {
     scope: './'
   }).then(function(reg) {
-    console.log('Service worker has been registered for scope:'+ reg.scope);
+    console.log('Service worker has been registered for scope:' + reg.scope);
   });
 }
