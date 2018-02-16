@@ -1,3 +1,6 @@
+var mySpinner = document.getElementById('mySpinner');
+mySpinner.style.display = 'block';
+
 /* set up an async GET request */
 var req = new XMLHttpRequest();
 // https://www.dropbox.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?dl=0
@@ -23,6 +26,8 @@ req.onload = function(e) {
       this.add(doc)
     }, this)
   });
+
+  mySpinner.style.display = 'none';
 
   new Vue({
     el: '#app',
