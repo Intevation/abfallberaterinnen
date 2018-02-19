@@ -10,24 +10,26 @@ var req = new XMLHttpRequest();
 req.open('GET', 'https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1', true);
 req.responseType = 'arraybuffer';
 
+var test;
+
+Papa.parse('data/zuordnung_plz_ort_landkreis.csv', {
+  download: true,
+  header: true,
+  complete: function(results) {
+    test = results.data;
+  }});
+
 req.onload = function(e) {
   /* parse the data when it is received */
   var wb = XLSX.read(req.response, { type: 'array' });
 
   var documents = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { range: 3 });
 
-  lunr.tokenizer.separator = /[\s\-\,]+/
-
-  var idx = lunr(function() {
-    this.ref('id')
-    this.field('PLZ')
-
-    documents.forEach(function(doc) {
-      this.add(doc)
-    }, this)
-  });
-
   mySpinner.style.display = 'none';
+
+  function uniq(a) {
+    return Array.from(new Set(a));
+  }
 
   new Vue({
     el: '#app',
@@ -40,27 +42,49 @@ req.onload = function(e) {
     methods: {
       search: function() {
         var results = [];
-        var query = this.query.toLowerCase();
-        var searchResults = [];
-        if (query) {
-          searchResults = idx.query(function(q) {
-            q.term(query, {
-              wildcard: lunr.Query.wildcard.TRAILING
-            })
-          });
-          if (searchResults.length > 0) {
-            this.count = searchResults.length;
-            for (var item in searchResults) {
-              results.push(documents.find(function(obj) { return obj.id === searchResults[item].ref }));
+        // var query = this.query.toLowerCase();
+        var query = this.query;
+        if (query.match(/[0-9]{2,}/)) {
+          console.log(query);
+          var patternPlz = new RegExp('^' + query + '.*$');
+          test.forEach(function(item) {
+            // Suchabfrage
+            if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
+              results.push(documents.find(function(obj) {
+                return obj.Verwaltungeinheit === item.landkreis
+              }));
             }
-            this.results = results;
+          });
+          if (results.length > 0) {
+            this.count = uniq(results).length;
+            this.results = uniq(results);
+            console.log(uniq(results));
           } else {
-            this.results = [];
             this.count = '';
+            this.results = [];
+          }
+        } else if (query.match(/[a-zA-Z]{3,}/)) {
+          console.log(query);
+          var patternOrt = new RegExp('^' + query + '.*$');
+          test.forEach(function(item) {
+            // Suchabfrage
+            if (item.hasOwnProperty('ort') && item.ort.match(patternOrt)) {
+              results.push(documents.find(function(obj) {
+                return obj.Verwaltungeinheit === item.landkreis
+              }));
+            }
+          });
+          if (results.length > 0) {
+            this.count = uniq(results).length;
+            this.results = uniq(results);
+            console.log(uniq(results));
+          } else {
+            this.count = '';
+            this.results = [];
           }
         } else {
-          this.results = [];
           this.count = '';
+          this.results = [];
         }
       }
     }
