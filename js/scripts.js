@@ -24,6 +24,13 @@ req.onload = function(e) {
   var wb = XLSX.read(req.response, { type: 'array' });
 
   var documents = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { range: 3 });
+  console.log(documents);
+  var filter = documents.filter(
+    function(item) {
+      return item.hasOwnProperty('PLZ')
+    }
+  );
+  console.log(filter);
 
   mySpinner.style.display = 'none';
 
@@ -55,7 +62,16 @@ req.onload = function(e) {
               }));
             }
           });
+          filter.forEach(function(item) {
+            // Suchabfrage
+            if (item.hasOwnProperty('PLZ') && item.PLZ.match(query)) {
+              results.push(item);
+              console.log(item);
+            }
+          });
           if (results.length > 0) {
+            results = results.filter(function(n) { return n !== undefined });
+
             this.count = uniq(results).length;
             this.results = uniq(results);
             console.log(uniq(results));
@@ -74,7 +90,16 @@ req.onload = function(e) {
               }));
             }
           });
+          filter.forEach(function(item) {
+            // Suchabfrage
+            if (item.hasOwnProperty('Entsorgungsgebiet') && item.Entsorgungsgebiet.match(query)) {
+              results.push(item);
+              console.log(item);
+            }
+          });
           if (results.length > 0) {
+            results = results.filter(function(n) { return n !== undefined });
+
             this.count = uniq(results).length;
             this.results = uniq(results);
             console.log(uniq(results));
