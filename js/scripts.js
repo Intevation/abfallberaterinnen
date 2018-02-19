@@ -24,13 +24,11 @@ req.onload = function(e) {
   var wb = XLSX.read(req.response, { type: 'array' });
 
   var documents = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { range: 3 });
-  console.log(documents);
   var filter = documents.filter(
     function(item) {
       return item.hasOwnProperty('PLZ')
     }
   );
-  console.log(filter);
 
   mySpinner.style.display = 'none';
 
@@ -52,7 +50,6 @@ req.onload = function(e) {
         // var query = this.query.toLowerCase();
         var query = this.query;
         if (query.match(/[0-9]{2,}/)) {
-          console.log(query);
           var patternPlz = new RegExp('^' + query + '.*$');
           test.forEach(function(item) {
             // Suchabfrage
@@ -66,7 +63,6 @@ req.onload = function(e) {
             // Suchabfrage
             if (item.hasOwnProperty('PLZ') && item.PLZ.match(query)) {
               results.push(item);
-              console.log(item);
             }
           });
           if (results.length > 0) {
@@ -74,13 +70,11 @@ req.onload = function(e) {
 
             this.count = uniq(results).length;
             this.results = uniq(results);
-            console.log(uniq(results));
           } else {
             this.count = '';
             this.results = [];
           }
         } else if (query.match(/[a-zA-Z]{3,}/)) {
-          console.log(query);
           var patternOrt = new RegExp('^' + query + '.*$');
           test.forEach(function(item) {
             // Suchabfrage
@@ -94,7 +88,6 @@ req.onload = function(e) {
             // Suchabfrage
             if (item.hasOwnProperty('Entsorgungsgebiet') && item.Entsorgungsgebiet.match(query)) {
               results.push(item);
-              console.log(item);
             }
           });
           if (results.length > 0) {
@@ -102,7 +95,6 @@ req.onload = function(e) {
 
             this.count = uniq(results).length;
             this.results = uniq(results);
-            console.log(uniq(results));
           } else {
             this.count = '';
             this.results = [];
