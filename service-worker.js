@@ -8,7 +8,6 @@ var precacheFiles = [
   'service-worker.js',
   'js/manup.min.js',
   'js/vue.js',
-  'js/lunr.js',
   'js/papaparse.min.js',
   'js/xlsx.full.min.js',
   'js/scripts.js',
