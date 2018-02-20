@@ -10,21 +10,21 @@ var req = new XMLHttpRequest();
 req.open('GET', 'https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1', true);
 req.responseType = 'arraybuffer';
 
-var test;
+var zuordnung;
 
 Papa.parse('data/zuordnung_plz_ort_landkreis.csv', {
   download: true,
   header: true,
   complete: function(results) {
-    test = results.data;
+    zuordnung = results.data;
   }});
 
 req.onload = function(e) {
   /* parse the data when it is received */
   var wb = XLSX.read(req.response, { type: 'array' });
 
-  var documents = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { range: 3 });
-  var filter = documents.filter(
+  var abfallberater = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { range: 3 });
+  var filter = abfallberater.filter(
     function(item) {
       return item.hasOwnProperty('PLZ')
     }
@@ -51,11 +51,13 @@ req.onload = function(e) {
         var query = this.query;
         if (query.match(/[0-9]{2,}/)) {
           var patternPlz = new RegExp('^' + query + '.*$');
-          test.forEach(function(item) {
+          zuordnung.forEach(function(item) {
             // Suchabfrage
             if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
-              results.push(documents.find(function(obj) {
-                return obj.Verwaltungeinheit === item.landkreis
+              results.push(abfallberater.find(function(obj) {
+                if (obj.hasOwnProperty('Verwaltungeinheit') && obj.Verwaltungeinheit === item.landkreis) {
+                  return obj.Verwaltungeinheit === item.landkreis
+                }
               }));
             }
           });
@@ -76,10 +78,10 @@ req.onload = function(e) {
           }
         } else if (query.match(/[a-zA-Z]{3,}/)) {
           var patternOrt = new RegExp('^' + query + '.*$');
-          test.forEach(function(item) {
+          zuordnung.forEach(function(item) {
             // Suchabfrage
             if (item.hasOwnProperty('ort') && item.ort.match(patternOrt)) {
-              results.push(documents.find(function(obj) {
+              results.push(abfallberater.find(function(obj) {
                 return obj.Verwaltungeinheit === item.landkreis
               }));
             }
