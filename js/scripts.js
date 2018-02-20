@@ -55,8 +55,8 @@ req.onload = function(e) {
             // Suchabfrage
             if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
               results.push(abfallberater.find(function(obj) {
-                if (obj.hasOwnProperty('Verwaltungeinheit') && obj.Verwaltungeinheit === item.landkreis) {
-                  return obj.Verwaltungeinheit === item.landkreis
+                if (obj.hasOwnProperty('Verwaltungeinheit') && obj.Verwaltungeinheit === item.kreis) {
+                  return obj.Verwaltungeinheit === item.kreis
                 }
               }));
             }
@@ -82,7 +82,7 @@ req.onload = function(e) {
             // Suchabfrage
             if (item.hasOwnProperty('ort') && item.ort.match(patternOrt)) {
               results.push(abfallberater.find(function(obj) {
-                return obj.Verwaltungeinheit === item.landkreis
+                return obj.Verwaltungeinheit === item.kreis
               }));
             }
           });
