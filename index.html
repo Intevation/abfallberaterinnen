@@ -66,7 +66,11 @@
             <img src="css/img/envelope-white.png" width="14" />
           </a>
         </span>
-        <input class="form-control" v-model="item['E-Mail']" readonly="readonly" type="text">
+        <div class="form-control" style="height: auto;">
+          <a v-bind:href="`mailto:${item['E-Mail']}`" target="_blank">
+            {{item['E-Mail']}}
+          </a>
+        </div>
       </div>
 
       <div class="input-group" v-if="item.Telefon">
@@ -75,7 +79,11 @@
             <img src="css/img/phone-white.png" width="14" />
           </a>
         </span>
-        <input class="form-control" v-model="item.Telefon" readonly="readonly" type="text">
+        <div class="form-control" style="height: auto;">
+          <a v-bind:href="`tel:${item['Telefon']}`" target="_blank">
+            {{item['Telefon']}}
+          </a>
+        </div>
       </div>
 
       <div class="input-group" v-if="item['Angebote']">
