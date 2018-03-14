@@ -40,8 +40,7 @@ req.onload = function(e) {
     el: '#app',
     data: {
       query: '',
-      results: [],
-      count: ''
+      results: []
 
     },
     methods: {
@@ -70,10 +69,8 @@ req.onload = function(e) {
           if (results.length > 0) {
             results = results.filter(function(n) { return n !== undefined });
 
-            this.count = uniq(results).length;
             this.results = uniq(results);
           } else {
-            this.count = '';
             this.results = [];
           }
         } else if (query.match(/[a-zA-Z]{3,}/)) {
@@ -95,14 +92,11 @@ req.onload = function(e) {
           if (results.length > 0) {
             results = results.filter(function(n) { return n !== undefined });
 
-            this.count = uniq(results).length;
             this.results = uniq(results);
           } else {
-            this.count = '';
             this.results = [];
           }
         } else {
-          this.count = '';
           this.results = [];
         }
       }
