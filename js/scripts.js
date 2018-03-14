@@ -62,7 +62,7 @@ req.onload = function(e) {
           });
           filter.forEach(function(item) {
             // Suchabfrage
-            if (item.hasOwnProperty('PLZ') && item.PLZ.match(query)) {
+            if (item.hasOwnProperty('PLZ') && item.PLZ.match(patternPlz)) {
               results.push(item);
             }
           });
@@ -74,7 +74,7 @@ req.onload = function(e) {
             this.results = [];
           }
         } else if (query.match(/[a-zA-Z]{3,}/)) {
-          var patternOrt = new RegExp('^' + query + '.*$');
+          var patternOrt = new RegExp('^' + query.trim() + '$', 'gim');
           zuordnung.forEach(function(item) {
             // Suchabfrage
             if (item.hasOwnProperty('ort') && item.ort.match(patternOrt)) {
@@ -85,7 +85,7 @@ req.onload = function(e) {
           });
           filter.forEach(function(item) {
             // Suchabfrage
-            if (item.hasOwnProperty('Entsorgungsgebiet') && item.Entsorgungsgebiet.match(query)) {
+            if (item.hasOwnProperty('Entsorgungsgebiet') && item.Entsorgungsgebiet.match(patternOrt)) {
               results.push(item);
             }
           });
