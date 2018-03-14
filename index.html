@@ -34,9 +34,8 @@
       </div>
     </div>
 
-    <h3 v-if="count">
-      Gefundene AbfallberaterInnen
-      <span class="label label-default">{{count}}</span>
+    <h3 v-if="results.length > 0">
+      Ihre Abfallberatung
     </h3>
 
     <div id="item" v-if="results" v-for="item in results" v-bind:item="item">
