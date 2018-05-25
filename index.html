@@ -12,6 +12,7 @@
 
   <link rel="manifest" href="manifest.json"></link>
 
+  <script type="text/javascript" src="js/polyfill.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
 
@@ -62,12 +63,13 @@
 
       <div class="input-group" v-if="item['E-Mail']">
         <span class="input-group-btn" title="E-Mail">
-          <a class="btn btn-custom" type="button" v-bind:href="`mailto:${item['E-Mail']}`">
+          <a class="btn btn-custom" type="button" v-bind:href="'mailto:'+item['E-Mail']">
             <img src="css/img/envelope-white.png" width="14" />
           </a>
         </span>
         <div class="form-control" style="height: auto;">
-          <a v-bind:href="`mailto:${item['E-Mail']}`" target="_blank">
+
+          <a v-bind:href="'mailto:'+item['E-Mail']" target="_blank">
             {{item['E-Mail']}}
           </a>
         </div>
@@ -75,12 +77,12 @@
 
       <div class="input-group" v-if="item.Telefon">
         <span class="input-group-btn" title="Telefon">
-          <a class="btn btn-custom" type="button" v-bind:href="`tel:${item.Telefon}`">
+          <a class="btn btn-custom" type="button" v-bind:href="'tel:'+item['Telefon']">
             <img src="css/img/phone-white.png" width="14" />
           </a>
         </span>
         <div class="form-control" style="height: auto;">
-          <a v-bind:href="`tel:${item['Telefon']}`" target="_blank">
+          <a v-bind:href="'tel:'+item['Telefon']" target="_blank">
             {{item['Telefon']}}
           </a>
         </div>
