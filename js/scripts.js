@@ -12,6 +12,10 @@ req.responseType = 'arraybuffer';
 
 var zuordnung;
 
+function uniq(a) {
+    return Array.from(new Set(a));
+}
+
 Papa.parse('data/zuordnung_plz_ort_landkreis.csv', {
   download: true,
   header: true,
@@ -32,9 +36,6 @@ req.onload = function(e) {
 
   mySpinner.style.display = 'none';
 
-  function uniq(a) {
-    return Array.from(new Set(a));
-  }
 
   new Vue({
     el: '#app',
