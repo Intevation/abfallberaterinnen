@@ -49,7 +49,8 @@ req.onload = function(e) {
         // var query = this.query.toLowerCase();
         var query = this.query;
         if (query.match(/[0-9]{2,}/)) {
-          var patternPlz = new RegExp('^' + query + '.*$');
+          //var patternPlz = new RegExp('^' + query + '.*$');
+          var patternPlz = new RegExp('(^'+query+'|\\s'+query+'|,+'+query+')');
           zuordnung.forEach(function(item) {
             // Suchabfrage
             if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
@@ -60,9 +61,8 @@ req.onload = function(e) {
               }));
             }
           });
-          filter.forEach(function(item) {
-            // Suchabfrage
-            if (item.hasOwnProperty('PLZ') && item.PLZ.match(patternPlz)) {
+          filter.filter(function (item) {
+            if (item.PLZ.match(patternPlz)) {
               results.push(item);
             }
           });
