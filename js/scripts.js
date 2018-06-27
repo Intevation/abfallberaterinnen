@@ -28,11 +28,24 @@ req.onload = function(e) {
   var wb = XLSX.read(req.response, { type: 'array' });
 
   var abfallberater = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { range: 3 });
-  var filter = abfallberater.filter(
+  var filterPLZ = abfallberater.filter(
     function(item) {
       return item.hasOwnProperty('PLZ')
     }
   );
+
+  var filterEntsorgungsgebiet = abfallberater.filter(
+    function(item) {
+      return item.hasOwnProperty('Entsorgungsgebiet')
+    }
+  );
+
+  // Entferne alle Orte aus zuordnung_plz_ort_landkreis.csv welche bereits in  Abfallberatungen_Dropbox.xlsx sind.
+  var filterZuordnungen = zuordnung.filter(function(obj) {
+    return !filterEntsorgungsgebiet.some(function(obj2) {
+      return obj.ort === obj2.Entsorgungsgebiet;
+    });
+  });
 
   mySpinner.style.display = 'none';
 
@@ -49,11 +62,11 @@ req.onload = function(e) {
         var results = [];
         // var query = this.query.toLowerCase();
         var query = this.query;
+        // Suche nach Postleitzahlen
         if (query.match(/[0-9]{2,}/)) {
           //var patternPlz = new RegExp('^' + query + '.*$');
           var patternPlz = new RegExp('(^'+query+'|\\s'+query+'|,+'+query+')');
-          zuordnung.forEach(function(item) {
-            // Suchabfrage
+          filterZuordnungen.forEach(function(item) {
             if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
               results.push(abfallberater.find(function(obj) {
                 if (obj.hasOwnProperty('Verwaltungeinheit') && obj.Verwaltungeinheit === item.kreis) {
@@ -62,7 +75,7 @@ req.onload = function(e) {
               }));
             }
           });
-          filter.filter(function (item) {
+          filterPLZ.filter(function (item) {
             if (item.PLZ.match(patternPlz)) {
               results.push(item);
             }
@@ -74,9 +87,10 @@ req.onload = function(e) {
           } else {
             this.results = [];
           }
-        } else if (query.match(/[a-zA-Z]{3,}/)) {
-          var patternOrt = new RegExp('^' + query.trim() + '$', 'gim');
-          zuordnung.forEach(function(item) {
+        // Suche nach Orten
+        } else if (query.match(/[a-zA-Z]{2,}/)) {
+          var patternOrt = new RegExp('^' + query.trim() + '.*$', 'gim');
+          filterZuordnungen.forEach(function(item) {
             // Suchabfrage
             if (item.hasOwnProperty('ort') && item.ort.match(patternOrt)) {
               results.push(abfallberater.find(function(obj) {
@@ -84,7 +98,7 @@ req.onload = function(e) {
               }));
             }
           });
-          filter.forEach(function(item) {
+          filterEntsorgungsgebiet.forEach(function(item) {
             // Suchabfrage
             if (item.hasOwnProperty('Entsorgungsgebiet') && item.Entsorgungsgebiet.match(patternOrt)) {
               results.push(item);
