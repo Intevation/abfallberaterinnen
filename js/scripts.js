@@ -13,7 +13,7 @@ req.responseType = 'arraybuffer';
 var zuordnung;
 
 function uniq(a) {
-    return Array.from(new Set(a));
+  return Array.from(new Set(a));
 }
 
 Papa.parse('data/zuordnung_plz_ort_landkreis.csv', {
@@ -49,7 +49,6 @@ req.onload = function(e) {
 
   mySpinner.style.display = 'none';
 
-
   new Vue({
     el: '#app',
     data: {
@@ -64,8 +63,8 @@ req.onload = function(e) {
         var query = this.query;
         // Suche nach Postleitzahlen
         if (query.match(/[0-9]{2,}/)) {
-          //var patternPlz = new RegExp('^' + query + '.*$');
-          var patternPlz = new RegExp('(^'+query+'|\\s'+query+'|,+'+query+')');
+          // var patternPlz = new RegExp('^' + query + '.*$');
+          var patternPlz = new RegExp('(^' + query + '|\\s' + query + '|,+' + query + ')');
           filterZuordnungen.forEach(function(item) {
             if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
               results.push(abfallberater.find(function(obj) {
@@ -75,7 +74,7 @@ req.onload = function(e) {
               }));
             }
           });
-          filterPLZ.filter(function (item) {
+          filterPLZ.filter(function(item) {
             if (item.PLZ.match(patternPlz)) {
               results.push(item);
             }
