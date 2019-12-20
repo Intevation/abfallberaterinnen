@@ -6,14 +6,14 @@ var req = new XMLHttpRequest();
 // https://www.dropbox.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?dl=0
 // www.dropbox.com doesn't support cors use dl.dropboxusercontent.com instead.
 // https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1
-req.open('GET', 'data/Abfallberatungen_Dropbox.xlsx', true);
+// req.open('GET', 'data/Abfallberatungen_Dropbox.xlsx', true);
+req.open('GET', 'https://mapserver.nabu.de/tonne/abfallberatungen', true);
 // req.open('GET', 'https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1', true);
 // req.open(
 //  'GET',
 //  'https://owncloud.nabu.de/owncloud/index.php/s/sn3rUqxW98Gjd3F/download',
 //  true
 // );
-req.responseType = 'arraybuffer';
 
 var zuordnung;
 var filterZuordnungen;
@@ -28,11 +28,7 @@ Papa.parse('data/zuordnung_plz_ort_landkreis.csv', {
 
 req.onload = function(e) {
   /* parse the data when it is received */
-  var wb = XLSX.read(req.response, { type: 'array' });
-
-  var abfallberater = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {
-    range: 3
-  });
+  var abfallberater = JSON.parse(req.response)
 
   var filterPLZ = abfallberater.filter(function(item) {
     return item.hasOwnProperty('PLZ');
