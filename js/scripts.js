@@ -1,49 +1,30 @@
 var mySpinner = document.getElementById('mySpinner');
 mySpinner.style.display = 'block';
 
+var xlsxSource = 'data/Kandidaten_gefiltert_20210602.xlsx';
+var plzsource = 'data/PLZ_WK.csv';
+
 /* set up an async GET request */
 var req = new XMLHttpRequest();
-// https://www.dropbox.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?dl=0
-// www.dropbox.com doesn't support cors use dl.dropboxusercontent.com instead.
-// https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1
-// req.open('GET', 'data/Abfallberatungen_Dropbox.xlsx', true);
-req.open('GET', 'https://mapserver.nabu.de/tonne/abfallberatungen', true);
-// req.open('GET', 'https://dl.dropboxusercontent.com/s/o6mz0i0984v0joi/Abfallberatungen_Dropbox.xlsx?raw=1&dl=1', true);
-// req.open(
-//  'GET',
-//  'https://owncloud.nabu.de/owncloud/index.php/s/sn3rUqxW98Gjd3F/download',
-//  true
-// );
+req.responseType = "arraybuffer";
+req.open('GET', xlsxSource, true);
 
-var zuordnung;
-var filterZuordnungen;
+var allPlz;
+var allCandidates;
 
-Papa.parse('data/zuordnung_plz_ort_landkreis.csv', {
+Papa.parse(plzsource, {
   download: true,
   header: true,
   complete: function(results) {
-    zuordnung = results.data;
+    allPlz = results.data;
   }
 });
 
 req.onload = function(e) {
-  /* parse the data when it is received */
-  var abfallberater = JSON.parse(req.response)
+  var wb = XLSX.read(req.response, {type: "buffer",raw: true});
 
-  var filterPLZ = abfallberater.filter(function(item) {
-    return item.hasOwnProperty('PLZ');
-  });
-
-  var filterEntsorgungsgebiet = abfallberater.filter(function(item) {
-    return item.hasOwnProperty('Entsorgungsgebiet');
-  });
-
-  // Entferne alle Orte aus zuordnung_plz_ort_landkreis.csv welche bereits in  Abfallberatungen_Dropbox.xlsx sind.
-  filterZuordnungen = zuordnung.filter(function(z) {
-    return !filterEntsorgungsgebiet.some(function(e) {
-      return z.ort === e.Entsorgungsgebiet;
-    });
-  });
+  var ws = wb.Sheets[wb.SheetNames[0]];
+  allCandidates = XLSX.utils.sheet_to_json(ws, {range: 2});
 
   mySpinner.style.display = 'none';
 
@@ -55,87 +36,52 @@ req.onload = function(e) {
     },
     methods: {
       search: function() {
+      // searches after three input numbers
+      // results contains an array of arrays of candidates with properties:
+      // PRAEFIX VORNAME NACHNAME PARTEI STRASSEPOSTFACHWK PLZWK ORTWK
+      // TELEFONVORWAHLWK TELEFONNUMMERWK EMAIL1 INTERNET TWITTER FACEBOOK
+      // INSTAGRAM WKNR WKNAME
         var results = new Set();
-        // var query = this.query.toLowerCase();
         var query = this.query;
         // Suche nach Postleitzahlen
-        if (query.match(/[0-9]{2,}/)) {
-          // var patternPlz = new RegExp('^' + query + '.*$');
+        var wkPLZ;
+        var wk = []; // all matching Wahlkreisnummer
+        if (query.match(/[0-9]{3,}/)) {
           var patternPlz = new RegExp(
             '(^' + query + '|\\s' + query + '|,+' + query + ')'
           );
-          filterZuordnungen.forEach(function(item) {
-            if (item.hasOwnProperty('plz') && item.plz.match(patternPlz)) {
-              var found = abfallberater.find(function(obj) {
-                if (
-                  obj.hasOwnProperty('Verwaltungeinheit') &&
-                  obj.Verwaltungeinheit === item.kreis
-                ) {
-                  return obj.Verwaltungeinheit === item.kreis;
-                }
-              });
-              if (found !== undefined) {
-                results.add(found);
-              }
-            }
+          wkPLZ = allPlz.filter(function(i){ // alle passenden Wahlkreise
+            return i.PLZ && i.PLZ.match(patternPlz);
           });
-          filterPLZ.filter(function(item) {
-            if (item.PLZ.match(patternPlz)) {
-              results.add(item);
-            }
-          });
-          if (results.size > 0) {
-            this.results = Array.from(results);
-          } else {
-            this.results = [];
-          }
-          // Suche nach Orten
-        } else if (query.match(/[a-zA-Z]{2,}/)) {
-          var patternOrt = new RegExp('^' + query.trim() + '.*$', 'gim');
-          filterZuordnungen.forEach(function(item) {
-            // Suchabfrage
-            if (item.hasOwnProperty('ort') && item.ort.match(patternOrt)) {
-              var found = abfallberater.find(function(obj) {
-                return obj.Verwaltungeinheit === item.kreis;
-              });
-              if (found !== undefined) {
-                results.add(found);
-              }
-            }
-          });
-          filterEntsorgungsgebiet.forEach(function(item) {
-            // Suchabfrage
-            if (
-              item.hasOwnProperty('Entsorgungsgebiet') &&
-              item.Entsorgungsgebiet.match(patternOrt)
-            ) {
-              results.add(item);
-            }
-          });
-          if (results.size > 0) {
-            this.results = Array.from(results);
-          } else {
-            this.results = [];
-          }
+        // // Suche nach WK-Bezeichnung, untested
+        //} else if (query.match(/[a-zA-Z]{3,}/)) {
+          // var patternOrt = new RegExp('^' + query.trim() + '.*$', 'gim');
+          // wkPLZ = allPlz.filter(function(i){
+          //   return i.Bezeichnung && i.Bezeichnung.match(patternOrt);
+          // });
         } else {
-          this.results = [];
+          return results;
         }
+        for (var i=0; i < wkPLZ.length; i++) {
+          if (wk.indexOf(wkPLZ[i].Wahlkreisnummer) < 0 ){
+            wk.push(wkPLZ[i]);
+          }
+        }
+        wk.forEach(function(item) {
+          var cands = allCandidates.filter(function(obj) {
+            return obj.WKNR === item.Wahlkreisnummer;
+          })
+          if (cands.length) {
+            for (var j = 0; j < cands.length; j ++) {
+              cands[j].WKNAME = item.Bezeichnung;
+            }
+            results.add(cands);
+          }
+        });
+        this.results = Array.from(results);
       }
     }
   });
 };
 req.send();
 
-/// / This is the service worker with the Cache-first network
-//
-/// / Add this below content to your HTML page, or add the js file to your page at the very top to register sercie worker
-// if (navigator.serviceWorker.controller) {
-//  console.log('[PWA Builder] active service worker found, no need to register')
-// } else {
-/// / Register the ServiceWorker
-//  navigator.serviceWorker.register('service-worker.js', {
-//    scope: './'
-//  }).then(function(reg) {
-//    console.log('Service worker has been registered for scope:' + reg.scope);
-//  });
-// }
