@@ -6,7 +6,6 @@ var precacheFiles = [
   '.',
   'index.html',
   'service-worker.js',
-  'js/manup.min.js',
   'js/vue.js',
   'js/papaparse.min.js',
   'js/xlsx.full.min.js',

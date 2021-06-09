@@ -5,10 +5,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="AbfallberaterInnen suchen">
-  <meta name="author" content="Bjoern Schilberg">
 
-  <title>AbfallberaterInnen suchen</title>
+  <title>Bundestagswahl - Info</title>
 
   <link rel="manifest" href="manifest.json"></link>
 
@@ -30,11 +28,12 @@
         <div class="input-group-addon">
           <img src="css/img/search.png" width="14" />
         </div>
-        <input type="search" class="form-control search-query" placeholder="Postleitzahl oder Ort eingeben ..." v-model="query" v-on:input="search"
+        <input type="search" class="form-control search-query" placeholder="Postleitzahl eingeben ..." v-model="query" v-on:input="search"
           @keydown.enter.prevent="" id="search" />
       </div>
     </div>
 
+    <!-- TODO -->
     <div id="item" v-if="results" v-for="item in results" v-bind:item="item">
       <div class="input-group" v-if="item['Unternehmen 1'] || item['Unternehmen 2']">
         <span class="input-group-addon" title="Unternehmen" style="vertical-align: top;">
@@ -135,10 +134,9 @@
 
     </div>
   </div>
-  <script type="text/javascript" src="js/manup.min.js"></script>
   <script type="text/javascript" src="js/vue.js"></script>
   <script type="text/javascript" src="js/papaparse.min.js"></script>
-  <script type="text/javascript" src="js/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="js/xlsx.full.min.js"></script> <!-- needed ?-->
   <script type="text/javascript" src="js/scripts.js"></script>
 
 </body>
