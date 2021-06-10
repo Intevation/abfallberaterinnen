@@ -54,16 +54,20 @@ req.onload = function(e) {
             return i.PLZ && i.PLZ.match(patternPlz);
           });
         // // Suche nach WK-Bezeichnung, untested
-        //} else if (query.match(/[a-zA-Z]{3,}/)) {
-          // var patternOrt = new RegExp('^' + query.trim() + '.*$', 'gim');
-          // wkPLZ = allPlz.filter(function(i){
-          //   return i.Bezeichnung && i.Bezeichnung.match(patternOrt);
-          // });
+      //} else if (query.match(/[a-zA-Z]{3,}/)) {
+        // var patternOrt = new RegExp('^' + query.trim() + '.*$', 'gim');
+        // wkPLZ = allPlz.filter(function(i){
+        //   return i.Bezeichnung && i.Bezeichnung.match(patternOrt);
+        // });
         } else {
           return results;
         }
         for (var i=0; i < wkPLZ.length; i++) {
-          if (wk.indexOf(wkPLZ[i].Wahlkreisnummer) < 0 ){
+          if (!wk.find(function(w){
+            return w.Wahlkreisnummer === wkPLZ[i].Wahlkreisnummer
+            })
+          )
+          {
             wk.push(wkPLZ[i]);
           }
         }

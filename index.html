@@ -32,111 +32,127 @@
           @keydown.enter.prevent="" id="search" />
       </div>
     </div>
-
-    <!-- TODO -->
-    <div id="item" v-if="results" v-for="item in results" v-bind:item="item">
-      <div class="input-group" v-if="item['Unternehmen 1'] || item['Unternehmen 2']">
-        <span class="input-group-addon" title="Unternehmen" style="vertical-align: top;">
-          <img src="css/img/home-white.png" width="14" />
-        </span>
-        <div class="form-control" style="height: auto;">
-          <div v-if="item['Unternehmen 1']">{{item['Unternehmen 1']}}</div>
-          <div v-if="item['Unternehmen 2']">{{item['Unternehmen 2']}}</div>
-        </div>
-      </div>
-
-
+    <div class="item" v-if="results" v-for="wk in results" v-bind:item="wk">
       <div class="input-group">
-        <span class="input-group-addon" style="vertical-align: top;" title="AbfallberaterIn">
-          <img src="css/img/user-white.png" width="14" />
+        <span class="input-group-addon" title="Wahlkreis" style="vertical-align: top;">
         </span>
         <div class="form-control" style="height: auto;">
-          <div v-if="item.Abfallberater">{{item.Abfallberater}}</div>
-          <div v-if="item.Adresse">{{item.Adresse}}</div>
+          <div>
+            Wahlkreis {{ wk[0].WKNR }} - {{wk[0].WKNAME}}
+          </div>
         </div>
       </div>
+      <div>
+        <div v-for="item in wk" v-bind:item="item" class="single-item">
 
-      <div class="input-group" v-if="item['E-Mail']">
-        <span class="input-group-btn" title="E-Mail">
-          <a class="btn btn-custom" type="button" v-bind:href="'mailto:'+item['E-Mail']">
-            <img src="css/img/envelope-white.png" width="14" />
-          </a>
-        </span>
-        <div class="form-control" style="height: auto;">
-
-          <a v-bind:href="'mailto:'+item['E-Mail']" target="_blank">
-            {{item['E-Mail']}}
-          </a>
+          <div class="input-group">
+              <span class="input-group-addon" type="button" title="Adresse">
+                <img src="css/img/envelope-white.png" width="14" />
+              </span>
+            <div class="form-control" style="height: auto;">
+              <div>
+                <span> {{ item.VORNAME }}</span>
+                <span v-if="item.PRAEFIX"> {{ item.PRAEFIX }} </span>
+                <span> {{ item.NACHNAME }}</span>
+                <span v-if="item.PARTEI"> ({{ item.PARTEI }})</span>
+              </div>
+              <div>
+                <span>{{ item.STRASSEPOSTFACHWK }}</span>
+              </div>
+              <div>
+                <span>{{ item.PLZWK }}</span>&nbsp;
+                <span>{{ item.ORTWK }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group" v-if="item.TELEFONNUMMERWK">
+            <span class="input-group-btn" title="Telefon">
+              <a class="btn btn-custom" type="button" v-bind:href="'tel:'+item['Telefon']">
+                <img src="css/img/phone-white.png" width="14" />
+              </a>
+            </span>
+            <div class="form-control" style="height: auto;">
+              <a v-bind:href="'tel:'+item.TELEFONVORWAHLWK+item.TELEFONNUMMERWK" target="_blank">
+                <span v-if="item.TELEFONVORWAHLWK">
+                  ({{item.TELEFONVORWAHLWK}})
+                </span>
+                <span>{{ item.TELEFONNUMMERWK }}</span>
+              </a>
+            </div>
+          </div>
+          <div class="input-group" v-if="item.EMAIL1">
+            <span class="input-group-btn" title="E-Mail">
+              <a class="btn btn-custom" type="button" v-bind:href="'mailto:'+item.EMAIL1">
+                <img src="css/img/envelope-white.png" width="14" />
+              </a>
+            </span>
+            <div class="form-control" style="height: auto;">
+              <a v-bind:href="'mailto:'+item.EMAIL1" target="_blank">
+                {{item.EMAIL1}}
+              </a>
+            </div>
+          </div>
+          <div class="input-group" v-if="item.INTERNET">
+            <span class="input-group-btn" title="Internetseite">
+              <a class="btn btn-custom" type="button" v-bind:href="item.INTERNET" target="_blank">
+                <img src="css/img/external-link-white.png" width="14" />
+              </a>
+            </span>
+            <div class="form-control" style="height: auto;">
+              <a v-bind:href="item.INTERNET" target="_blank">
+                {{item.INTERNET}}
+              </a>
+            </div>
+          </div>
+          <div class="input-group" v-if="item.TWITTER">
+            <span class="input-group-btn" title="Twitter">
+              <a class="btn btn-custom" type="button"
+                v-bind:href="item.TWITTER"
+                target="_blank">
+                <img src="css/img/external-link-white.png" width="14" />
+              </a>
+            </span>
+            <div class="form-control" style="height: auto;">
+              <a v-bind:href="item.TWITTER" target="_blank">
+                {{item.TWITTER}}
+              </a>
+            </div>
+          </div>
+          <div class="input-group" v-if="item.FACEBOOK">
+            <span class="input-group-btn" title="Facebook">
+              <a class="btn btn-custom" type="button"
+                v-bind:href="item.FACEBOOK"
+                target="_blank">
+                <img src="css/img/external-link-white.png" width="14" />
+              </a>
+            </span>
+            <div class="form-control" style="height: auto;">
+              <a v-bind:href="item.FACEBOOK" target="_blank">
+                {{item.FACEBOOK}}
+              </a>
+            </div>
+          </div>
+          <div class="input-group" v-if="item.INSTAGRAM">
+            <span class="input-group-btn" title="Instagram">
+              <a class="btn btn-custom" type="button"
+                v-bind:href="item.INSTAGRAM"
+                target="_blank">
+                <img src="css/img/external-link-white.png" width="14" />
+              </a>
+            </span>
+            <div class="form-control" style="height: auto;">
+              <a v-bind:href="item.INSTAGRAM" target="_blank">
+                {{item.INSTAGRAM}}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="input-group" v-if="item.Telefon">
-        <span class="input-group-btn" title="Telefon">
-          <a class="btn btn-custom" type="button" v-bind:href="'tel:'+item['Telefon']">
-            <img src="css/img/phone-white.png" width="14" />
-          </a>
-        </span>
-        <div class="form-control" style="height: auto;">
-          <a v-bind:href="'tel:'+item['Telefon']" target="_blank">
-            {{item['Telefon']}}
-          </a>
-        </div>
-      </div>
-
-      <div class="input-group" v-if="item['Angebote']">
-        <span class="input-group-addon" title="Angebote" style="vertical-align: top;">
-          <img src="css/img/info-sign-white.png" width="14" />
-        </span>
-        <div class="form-control" style="height: auto;">
-          <em>Angebote zu Abfallvermeidung und Abfalltrennung (Auswahl):</em>
-          <div style="margin-top:10px">{{item.Angebote}}</div>
-        </div>
-      </div>
-
-      <div class="input-group" v-if="item['Link 1']">
-        <span class="input-group-btn" title="Link 1">
-          <a class="btn btn-custom" type="button" v-bind:href="item['Link 1']" target="_blank">
-            <img src="css/img/external-link-white.png" width="14" />
-          </a>
-        </span>
-        <div class="form-control" style="height: auto;">
-          <a v-bind:href="item['Link 1']" target="_blank">
-            {{item['Linktext 1']}}
-          </a>
-        </div>
-      </div>
-
-      <div class="input-group" v-if="item['Link 2']">
-        <span class="input-group-btn" title="Link 2">
-          <a class="btn btn-custom" type="button" v-bind:href="item['Link 2']" target="_blank">
-            <img src="css/img/external-link-white.png" width="14" />
-          </a>
-        </span>
-        <div class="form-control" style="height: auto;">
-          <a v-bind:href="item['Link 2']" target="_blank">
-            {{item['Linktext 2']}}
-          </a>
-        </div>
-      </div>
-
-      <div class="input-group" v-if="item['Link 3']">
-        <span class="input-group-btn" title="Link 3">
-          <a class="btn btn-custom" type="button" v-bind:href="item['Link 3']" target="_blank">
-            <img src="css/img/external-link-white.png" width="14" />
-          </a>
-        </span>
-        <div class="form-control" style="height: auto;">
-          <a v-bind:href="item['Link 3']" target="_blank">
-            {{item['Linktext 3']}}
-          </a>
-        </div>
-      </div>
-
     </div>
   </div>
   <script type="text/javascript" src="js/vue.js"></script>
   <script type="text/javascript" src="js/papaparse.min.js"></script>
-  <script type="text/javascript" src="js/xlsx.full.min.js"></script> <!-- needed ?-->
+  <script type="text/javascript" src="js/xlsx.full.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
 
 </body>
