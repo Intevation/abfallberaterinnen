@@ -53,12 +53,12 @@ req.onload = function(e) {
           wkPLZ = allPlz.filter(function(i){ // alle passenden Wahlkreise
             return i.PLZ && i.PLZ.match(patternPlz);
           });
-        // // Suche nach WK-Bezeichnung, untested
-      //} else if (query.match(/[a-zA-Z]{3,}/)) {
-        // var patternOrt = new RegExp('^' + query.trim() + '.*$', 'gim');
-        // wkPLZ = allPlz.filter(function(i){
-        //   return i.Bezeichnung && i.Bezeichnung.match(patternOrt);
-        // });
+        // // Suche nach WK-Bezeichnung
+        } else if (query.match(/[a-zA-Z]{4,}/)) {
+          var patternOrt = new RegExp(query.trim() + '.*$', 'gim');
+          wkPLZ = allPlz.filter(function(i){
+            return i.Bezeichnung && i.Bezeichnung.match(patternOrt);
+          });
         } else {
           return results;
         }
