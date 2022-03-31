@@ -1,7 +1,7 @@
 var mySpinner = document.getElementById('mySpinner');
 mySpinner.style.display = 'block';
 
-var xlsxSource = 'data/Kandidaten_gefiltert_20210602.xlsx';
+var xlsxSource = 'data/Kandidaten_gefiltert.xlsx';
 var plzsource = 'data/PLZ_WK.csv';
 
 /* set up an async GET request */

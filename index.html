@@ -43,7 +43,7 @@
         </div>
       </div>
       <div>
-        <div v-for="item in wk" v-bind:item="item" class="single-item">
+        <div v-for="item in wk" v-bind:item="item" class="single-item" v-if="item.VORNAME && item.NACHNAME">
 
           <div class="input-group">
               <span class="input-group-addon" type="button" title="Adresse">
@@ -56,6 +56,8 @@
                 <span> {{ item.NACHNAME }}</span>
                 <span v-if="item.PARTEI"> ({{ item.PARTEI }})</span>
               </div>
+              <p></p>
+              <div>Kontaktadresse:</div>
               <div>
                 <span>{{ item.STRASSEPOSTFACHWK }}</span>
               </div>
@@ -109,7 +111,7 @@
               <a class="btn btn-custom" type="button"
                 v-bind:href="item.TWITTER"
                 target="_blank">
-                <img src="css/img/external-link-white.png" width="14" />
+                <img src="css/img/twitter-square.png" width="14" />
               </a>
             </span>
             <div class="form-control" style="height: auto;">
@@ -123,7 +125,7 @@
               <a class="btn btn-custom" type="button"
                 v-bind:href="item.FACEBOOK"
                 target="_blank">
-                <img src="css/img/external-link-white.png" width="14" />
+                <img src="css/img/facebook-brands.png" width="14" />
               </a>
             </span>
             <div class="form-control" style="height: auto;">
@@ -137,7 +139,7 @@
               <a class="btn btn-custom" type="button"
                 v-bind:href="item.INSTAGRAM"
                 target="_blank">
-                <img src="css/img/external-link-white.png" width="14" />
+                <img src="css/img/instagram-square-brands.png" width="14" />
               </a>
             </span>
             <div class="form-control" style="height: auto;">
